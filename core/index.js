@@ -36,13 +36,15 @@ var Core = function(options) {
 
 		if (self.mentions.indexOf(message.mention.toLowerCase()) == -1) return;
 
+		if (self.mentions.indexOf(message.mention.toLowerCase() + ",") == -1) return; // too lazy to add commas to mentions
+
 		var command = self.commands.find(function (cmd) {
 			return cmd.variations.indexOf(message.cmd.toLowerCase()) > -1;
 		});
 
 		if (!command) return;
 
-		if (command.admin_only && message.from_id != self.admin_id) return ;
+		if (command.admin_only && message.from_id != self.admin_id) return message.reply("У вас нет прав администратора!");
 
 		console.log(`${message.from_id}/${message.chat_id || 0}: ${message.body}`);
 
