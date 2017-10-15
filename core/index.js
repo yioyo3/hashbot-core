@@ -34,7 +34,7 @@ var Core = function(options) {
 
 		if (self.ignore.indexOf(message.from_id) > -1) return;
 
-		if ((self.mentions.indexOf(message.mention.toLowerCase() + ",") == -1) || (self.mentions.indexOf(message.mention.toLowerCase()) == -1)) return;
+		if ((self.mentions.indexOf(message.mention.toLowerCase() + ",") == -1) && (self.mentions.indexOf(message.mention.toLowerCase()) == -1)) return;
 
 		var command = self.commands.find(function (cmd) {
 			return cmd.variations.indexOf(message.cmd.toLowerCase()) > -1;
