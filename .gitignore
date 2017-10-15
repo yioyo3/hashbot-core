@@ -57,3 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# some private data like configs (with tokens) and anything else
+index.js
+config.json
+
+# but we need core index
+!core/index.js

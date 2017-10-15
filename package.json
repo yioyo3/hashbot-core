@@ -1,0 +1,26 @@
+{
+  "name": "hashbot",
+  "version": "0.0.1",
+  "description": "Hash Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lithiumjs/hashbot.git"
+  },
+  "keywords": [
+    "vk",
+    "bot"
+  ],
+  "author": "lithium_js",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/lithiumjs/hashbot/issues"
+  },
+  "homepage": "https://github.com/lithiumjs/hashbot#readme",
+  "dependencies": {
+    "VK-Promise": "^0.2.3"
+  }
+}
