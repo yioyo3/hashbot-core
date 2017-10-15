@@ -30,7 +30,7 @@ var Core = function(options) {
 	this.vk.on("message", function(event, plain_message) {
 		var message = new Message(plain_message);
 
-		if (message.admin_only && message.from_id != self.admin_id) return;
+		if (self.admin_only && message.from_id != self.admin_id) return;
 
 		if (self.ignore.indexOf(message.from_id) > -1) return;
 
