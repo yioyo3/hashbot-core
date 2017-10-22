@@ -63,3 +63,6 @@ config.json
 
 # but we need core index
 !core/index.js
+
+# i'm sure we don't need temporary files
+tmp

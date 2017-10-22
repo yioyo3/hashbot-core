@@ -21,6 +21,11 @@
   },
   "homepage": "https://github.com/lithiumjs/hashbot#readme",
   "dependencies": {
-    "VK-Promise": "^0.2.3"
+    "VK-Promise": "^0.2.3",
+    "canvas": "^1.6.7",
+    "image-binary": "^1.0.0",
+    "request": "^2.83.0",
+    "rucaptcha-client": "^1.0.4",
+    "stream-to-array": "^2.3.0"
   }
 }
