@@ -66,3 +66,6 @@ config.json
 
 # i'm sure we don't need temporary files
 tmp
+
+# and db too
+db.json
