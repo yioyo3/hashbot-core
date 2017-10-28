@@ -79,14 +79,19 @@ var Core = function(options) {
 			}
 		}
 
-		message.send = function (body, data) {
+		message.send = function(body, data) {
 			new_body = `[id${user.id}|${user.nick}], ${body}`;
 			message.sendPlain(new_body, data);
 		}
 
-		message.reply = function (body, data) {
+		message.reply = function(body, data) {
 			new_body = `[id${user.id}|${user.nick}], ${body}`;
 			message.replyPlain(new_body, data);
+		}
+
+		message.sendPhoto = function(p, t) {
+			new_t = `[id${user.id}|${user.nick}], ${t || ""}`;
+			message.sendPhotoPlain(p, new_t);
 		}
 
 		self.mps[message.from_id] = (self.mps[message.from_id] || 0) + 1;

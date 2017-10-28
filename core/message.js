@@ -5,6 +5,7 @@ var Message = function(plain_msg) {
 	}
 	this.sendPlain = plain_msg.send;
 	this.replyPlain = plain_msg.reply;
+	this.sendPhotoPlain = plain_msg.sendPhoto;
 	this.struct = this.body.split(" ");
 	this.mention = this.struct[0];
 	this.cmd = this.struct[1];
