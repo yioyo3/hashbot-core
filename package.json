@@ -1,0 +1,31 @@
+{
+  "name": "hashbot-core",
+  "version": "0.5.0",
+  "description": "Hash Bot Core",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lithiumjs/hashbot.git"
+  },
+  "keywords": [
+    "vk",
+    "bot"
+  ],
+  "author": "lithium_js",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/lithiumjs/hashbot/issues"
+  },
+  "homepage": "https://github.com/lithiumjs/hashbot#readme",
+  "dependencies": {
+    "VK-Promise": "^0.2.3",
+    "closest-str": "^2.2.1",
+    "image-binary": "^1.0.0",
+    "lowdb": "^1.0.0",
+    "rucaptcha-client": "^1.0.4",
+    "threads": "^0.8.1"
+  }
+}
