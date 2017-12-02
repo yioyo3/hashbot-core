@@ -1,7 +1,7 @@
-var Command = function(variations, description, access_level, callback) {
+var Command = function(variations, description, accessLevel, callback) {
 	this.variations = variations;
 	this.description = description;
-	this.access_level = access_level;
+	this.accessLevel = accessLevel;
 	this.callback = callback;
 }
 

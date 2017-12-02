@@ -54,11 +54,12 @@ var Core = function(options) {
 	this.db = new this.low(this.adapter);
 	this.db.defaults({users: []}).write();
 	client = require("rucaptcha-client").create(options.rucaptcha_key);
+	linkchecker = /([\w\-_]+(?:(?:\.|\s*\[dot\]\s*[A-Z\-_]+)+))([A-Z\-\.,@?^=%&:/~\+#]*[A-Z\-\@?^=%&/~\+#]){2,3}?/gi;
 
 	var self = this;
 
-	this.addCommand = function(variations, description, admin_only, callback) {
-		self.commands.push(new Command(variations, description, admin_only, callback));
+	this.addCommand = function(variations, description, accessLevel, callback) {
+		self.commands.push(new Command(variations, description, accessLevel, callback));
 	};
 
 	this.createUser = function(id) {
@@ -119,18 +120,24 @@ var Core = function(options) {
 		if (user.isBanned) return;
 
 		message.send = function(body, data) {
-			new_body = `[id${user.id}|${user.nick}], ${body}`;
-			message.sendPlain(new_body.replace(/([\w\-_]+(?:(?:\.|\s*\[dot\]\s*[A-Z\-_]+)+))([A-Z\-\.,@?^=%&:/~\+#]*[A-Z\-\@?^=%&/~\+#]){2,3}?/gi, "<LINK>"), data).catch(logger.prej);
+			return new Promise(function(resolve, reject) {
+				new_body = `[id${user.id}|${user.nick}], ${body}`;
+				message.sendPlain(new_body.replace(linkchecker, "<LINK>"), data).then(resolve, reject);
+			});
 		}
 
 		message.reply = function(body, data) {
-			new_body = `[id${user.id}|${user.nick}], ${body}`;
-			message.replyPlain(new_body.replace(/([\w\-_]+(?:(?:\.|\s*\[dot\]\s*[A-Z\-_]+)+))([A-Z\-\.,@?^=%&:/~\+#]*[A-Z\-\@?^=%&/~\+#]){2,3}?/gi, "<LINK>"), data).catch(logger.prej);
+			return new Promise(function(resolve, reject) {
+				new_body = `[id${user.id}|${user.nick}], ${body}`;
+				message.replyPlain(new_body.replace(linkchecker, "<LINK>"), data).then(resolve, reject);
+			});
 		}
 
 		message.sendPhoto = function(p, t) {
-			new_t = `[id${user.id}|${user.nick}], ${t || ""}`;
-			message.sendPhotoPlain(p, new_t.replace(/([\w\-_]+(?:(?:\.|\s*\[dot\]\s*[A-Z\-_]+)+))([A-Z\-\.,@?^=%&:/~\+#]*[A-Z\-\@?^=%&/~\+#]){2,3}?/gi, "<LINK>")).catch(logger.prej);
+			return new Promise(function(resolve, reject) {
+				new_t = `[id${user.id}|${user.nick}], ${t || ""}`;
+				message.sendPhotoPlain(p, new_t.replace(linkchecker, "<LINK>")).then(resolve, reject);
+			});
 		}
 
 		message.user = user;
@@ -154,7 +161,7 @@ var Core = function(options) {
 
 		if (!command) return self.chatBot.query(`${message.cmd} ${message.search}`, (a) => message.send(a || "Здесь мог бы быть ваш ответ"));
 
-		if (command.access_level > user.accessLevel) return message.reply("у вас нет необходимых прав!");
+		if (command.accessLevel > user.accessLevel) return message.reply("у вас нет необходимых прав!");
 
 		try {
 			command.callback(message);
