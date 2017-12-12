@@ -28,7 +28,7 @@ var Command = require("./command.js");
 var https = require("https");
 var Image = require("image-binary");
 var logger = require("sloger");
-logger.add("cmd", "\033[44m CMD  \033[0m");
+logger.add("cmd", "\033[44m CMD  \033[0m"); 
 logger.add("init", "\033[102;30m INIT \033[0m");
 logger.add("captcha", "\033[104m CAPT \033[0m");
 logger.add("prej", "\033[41m PREJ \033[0m", true);
@@ -41,11 +41,10 @@ process.on("uncaughtException", function(e) {
 var Core = function(options) {
 	logger.init("Initializing core...");
 	this.VK = require("VK-Promise");
+	if (!options.access_token) throw new Error("No access_token passed.")
 	this.vk = new this.VK(options.access_token);
 	this.commands = [];
-	this.admin_id = options.admin_id;
-	this.admin_only = options.admin_only;
-	this.mentions = options.mentions;
+	this.mentions = options.mentions || ["бот", "bot"];
 	this.mps = {};
 	this.chatBot = require("./chatbot.js");
 	this.low = require("lowdb");
@@ -53,7 +52,9 @@ var Core = function(options) {
 	this.adapter = new this.FileSync("./hashbotDB.json");
 	this.db = new this.low(this.adapter);
 	this.db.defaults({users: []}).write();
-	client = require("rucaptcha-client").create(options.rucaptcha_key);
+	if (options.rucaptcha_key) {
+		client = require("rucaptcha-client").create(options.rucaptcha_key);
+	}
 	linkchecker = /([\w\-_]+(?:(?:\.|\s*\[dot\]\s*[A-Z\-_]+)+))([A-Z\-\.,@?^=%&:/~\+#]*[A-Z\-\@?^=%&/~\+#]){2,3}?/gi;
 
 	var self = this;
@@ -171,21 +172,25 @@ var Core = function(options) {
 	});
 
 	this.vk.on("captcha", function(event, data) {
-		let balance;
-		client.balance
-		.then((num) => {
-			balance = num;
-			return Image.create(data.captcha_img);
-		})
-		.then((image) => {
-			client.image = image;
-			return client.solve({});
-		})
-		.then((answer) => {
-			logger.captcha('Balance: ' + balance);
-			logger.captcha('Answer: ' + answer.text);
-			data.submit(answer.text);
-		});
+		if (client) {
+			let balance;
+			client.balance
+			.then((num) => {
+				balance = num;
+				return Image.create(data.captcha_img);
+			})
+			.then((image) => {
+				client.image = image;
+				return client.solve({});
+			})
+			.then((answer) => {
+				logger.captcha('Balance: ' + balance);
+				logger.captcha('Answer: ' + answer.text);
+				data.submit(answer.text);
+			});
+		} else {
+			logger.warn("No captcha key supplied, ignoring captcha");
+		}
 	});
 
 	logger.ok("Core initialized, awaiting commands");
