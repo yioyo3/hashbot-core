@@ -1,6 +1,6 @@
 {
   "name": "hashbot-core",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Hash Bot Core",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,7 @@
     "image-binary": "^1.0.0",
     "lowdb": "^1.0.0",
     "rucaptcha-client": "^1.0.4",
+    "sloger": "^1.0.0",
     "threads": "^0.8.1"
   }
 }
