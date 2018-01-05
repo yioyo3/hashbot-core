@@ -1,6 +1,6 @@
 {
   "name": "hashbot-core",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Hash Bot Core",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lithiumjs/hashbot.git"
+    "url": "git+https://github.com/yioyo3/hashbot-core.git"
   },
   "keywords": [
     "vk",
@@ -17,9 +17,9 @@
   "author": "lithium_js",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/lithiumjs/hashbot/issues"
+    "url": "https://github.com/yioyo3/hashbot-core/issues"
   },
-  "homepage": "https://github.com/lithiumjs/hashbot#readme",
+  "homepage": "https://github.com/yioyo3/hashbot-core/#readme",
   "dependencies": {
     "VK-Promise": "^0.2.3",
     "closest-str": "^2.2.1",
